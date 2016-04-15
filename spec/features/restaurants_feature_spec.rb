@@ -25,14 +25,13 @@ feature 'restaurants' do
     before { sign_up }
 
     scenario 'user must be logged in' do
-      click_link('Sign out')
+      sign_out
       click_link 'Add a restaurant'
       expect(page).to have_content('Log in')
       expect(page).to have_button("Log in")
     end
 
     scenario 'prompts user to fill out a form, then displays the new restaurant' do
-      visit '/restaurants'
       click_link 'Add a restaurant'
       fill_in 'Name', with: 'KFC'
       click_button 'Create Restaurant'
@@ -42,7 +41,6 @@ feature 'restaurants' do
 
     context 'an invaild restaurant' do
       it 'does not let you submit a name that is too short' do
-        visit '/restaurants'
         click_link 'Add a restaurant'
         fill_in 'Name', with: 'kf'
         click_button 'Create Restaurant'
@@ -95,6 +93,10 @@ feature 'restaurants' do
       click_link 'Delete KFC'
       expect(page).not_to have_content 'KFC'
       expect(page).to have_content 'Restaurant deleted sucessfully'
+    end
+
+    scenario 'User can only delete their own restaurant' do
+
     end
   end
 end

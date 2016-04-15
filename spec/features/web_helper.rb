@@ -5,4 +5,8 @@ def sign_up
   fill_in('Password', with: 'testtest')
   fill_in('Password confirmation', with: 'testtest')
   click_button('Sign up')
-end  
+end
+
+def sign_out
+  click_link('Sign out')
+end
