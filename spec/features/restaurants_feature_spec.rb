@@ -78,6 +78,10 @@ feature 'restaurants' do
       expect(page).to have_content 'Kentucky Fried Chicken'
       expect(current_path).to eq '/restaurants'
     end
+
+    scenario 'user can only edit their own restaurant' do
+
+    end
   end
 
   context 'deleting restaurants' do

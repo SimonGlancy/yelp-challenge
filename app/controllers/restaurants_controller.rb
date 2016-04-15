@@ -6,9 +6,12 @@ class RestaurantsController < ApplicationController
   end
 
   def create
+    @user = User.from_omniauth(request.env["omniauth.auth"])
+    @current_user = User.find(session[:user_id])
     @restaurant = Restaurant.new(restaurant_params)
       if @restaurant.save
         redirect_to restaurants_path
+        # append to current user that's signed in
       else
         render 'new'
       end
