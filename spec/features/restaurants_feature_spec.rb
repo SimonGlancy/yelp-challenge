@@ -11,7 +11,8 @@ feature 'restaurants' do
 
   context 'restaurants have been added' do
     before do
-      Restaurant.create(name: 'KFC')
+      sign_up
+      create_restaurant
     end
 
     scenario 'display restaurants' do
@@ -65,7 +66,7 @@ feature 'restaurants' do
   context 'editing restaurants' do
     before do
       sign_up
-      Restaurant.create name: 'KFC'
+      create_restaurant
     end
 
     scenario 'let a user edit a restaurant' do
@@ -78,14 +79,17 @@ feature 'restaurants' do
     end
 
     scenario 'user can only edit their own restaurant' do
-
+      sign_out
+      sign_up(email: 'test2@email.com')
+      click_link 'Edit KFC'
+      expect(page).to have_content 'You cannot edit this restaurant'
     end
   end
 
   context 'deleting restaurants' do
     before do
       sign_up
-      Restaurant.create name: 'KFC'
+      create_restaurant
     end
 
     scenario 'User can delete restaurant' do
@@ -96,7 +100,10 @@ feature 'restaurants' do
     end
 
     scenario 'User can only delete their own restaurant' do
-
+      sign_out
+      sign_up(email: 'test2@email.com')
+      click_link 'Delete KFC'
+      expect(page).to have_content 'You cannot delete this restaurant'
     end
   end
 end
